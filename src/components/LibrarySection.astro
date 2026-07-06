@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const saraRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/sara.yaml'), 'utf8')) as any;
+const bib = saraRaw?.biblioteca ?? {};
+
+const actividadesRaw = await getCollection('actividades', ({ data }) => data.activo !== false);
+const actividades = actividadesRaw
+  .sort((a, b) => a.data.orden - b.data.orden)
+  .slice(0, 6);
+
+const categoriaColores: Record<string, string> = {
+  'Club de lectura': 'var(--color-salvia)',
+  'Evento literario': 'var(--color-amarillo)',
+  'Ludoteca': 'var(--color-rosa)',
+};
+---
+
+<section
+  id="biblioteca"
+  class="py-24 lg:py-32"
+  style="background:var(--color-crema2)"
+  aria-labelledby="biblioteca-titulo"
+>
+  <div class="container mx-auto px-6 lg:px-10">
+
+    <!-- Encabezado -->
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16">
+      <div class="reveal">
+        <span class="salvia-line" aria-hidden="true"></span>
+        <h2
+          id="biblioteca-titulo"
+          class="font-display font-semibold mb-4"
+          style="font-size:var(--text-display-md);color:var(--color-tierra)"
+        >
+          {bib.nombre ?? 'Biblioteca-Ludoteca de Muel'}
+        </h2>
+        <p class="prose-cottage">
+          {bib.descripcion ?? ''}
+        </p>
+      </div>
+
+      {bib.imagen && (
+        <div class="reveal" style="transition-delay:0.15s">
+          <img
+            src={bib.imagen}
+            alt={bib.imagen_alt ?? 'Biblioteca de Muel'}
+            width="600"
+            height="400"
+            class="w-full aspect-video object-cover"
+            style="border-radius:2px"
+            loading="lazy"
+          />
+        </div>
+      )}
+    </div>
+
+    <!-- Actividades -->
+    {actividades.length > 0 && (
+      <div>
+        <h3 class="font-display font-semibold mb-8" style="font-size:1.75rem;color:var(--color-tierra)">
+          Actividades y novedades
+        </h3>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+          {actividades.map((act, i) => {
+            const fechaFmt = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(act.data.fecha));
+            const color = categoriaColores[act.data.categoria] ?? 'var(--color-salvia)';
+            return (
+              <li class="reveal" style={`transition-delay:${i * 0.08}s`}>
+                <a href={`/actividades/${act.slug}`} class="card-actividad flex flex-col h-full group block">
+                  {act.data.imagen && (
+                    <div class="overflow-hidden aspect-video mb-4" style="border-radius:2px">
+                      <img
+                        src={act.data.imagen}
+                        alt={act.data.imagen_alt ?? act.data.titulo}
+                        width="400"
+                        height="225"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div class="flex items-center gap-2 mb-2">
+                    <span
+                      class="font-body text-xs font-medium tracking-widest uppercase px-2 py-0.5"
+                      style={`background:${color};color:var(--color-blanco);opacity:0.9`}
+                    >
+                      {act.data.categoria}
+                    </span>
+                  </div>
+                  <h4
+                    class="font-display font-semibold text-lg leading-snug mb-2 transition-colors duration-300 group-hover:text-salvia"
+                    style="color:var(--color-tierra)"
+                  >
+                    {act.data.titulo}
+                  </h4>
+                  <p class="font-body text-sm leading-relaxed flex-1 mb-3" style="color:var(--color-gris)">
+                    {act.data.extracto}
+                  </p>
+                  <time
+                    datetime={new Date(act.data.fecha).toISOString()}
+                    class="font-body text-xs mt-auto"
+                    style="color:var(--color-gris)"
+                  >
+                    {fechaFmt}
+                  </time>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>

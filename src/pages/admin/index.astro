@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout titulo="Panel editorial — Sara Benrahou" descripcion="Acceso al panel de gestión de contenido">
+  <Header slot="header" />
+  <div class="pt-28 pb-24 min-h-screen" style="background:var(--color-crema2)">
+    <div class="container mx-auto px-6 lg:px-10 max-w-2xl">
+      <span class="salvia-line" aria-hidden="true"></span>
+      <h1 class="font-display font-semibold mb-4" style="font-size:var(--text-display-md);color:var(--color-tierra)">
+        Panel editorial
+      </h1>
+      <p class="font-body leading-relaxed mb-10" style="color:var(--color-gris)">
+        Desde aquí puedes gestionar el contenido de tu web: actividades de la biblioteca, datos personales, tu libro y más.
+      </p>
+      <a href="https://app.pagescms.org" target="_blank" rel="noopener noreferrer" class="btn-primary text-base px-8 py-4 mb-12 inline-flex">
+        Abrir Pages CMS
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+      <div class="space-y-4">
+        {[
+          ['Añadir una actividad', 'Ve a «Actividades» → «Nueva actividad». Rellena título, fecha, descripción e imagen. Guarda y en 2 minutos aparece en la web.'],
+          ['Editar tus datos', 'Ve a «Datos de Sara» y actualiza bio, foto o redes sociales.'],
+          ['Actualizar el libro', 'Ve a «Configuración» para cambiar la descripción o el enlace de compra.'],
+          ['Desactivar una actividad', 'Edita la actividad y desactiva el campo «¿Mostrar en la web?».'],
+        ].map(([titulo, desc]) => (
+          <div class="p-6" style="background:var(--color-blanco);border:1px solid var(--color-rosa)">
+            <h3 class="font-body font-semibold mb-2" style="color:var(--color-tierra)">{titulo}</h3>
+            <p class="font-body text-sm leading-relaxed" style="color:var(--color-gris)">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <Footer slot="footer" />
+</BaseLayout>

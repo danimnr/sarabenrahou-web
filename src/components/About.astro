@@ -1,0 +1,111 @@
+---
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const saraRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/sara.yaml'), 'utf8')) as any;
+const sara = {
+  ...saraRaw,
+  redes: Array.isArray(saraRaw?.redes) ? saraRaw.redes : [],
+};
+
+const iconos: Record<string, string> = {
+  instagram: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  tiktok: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>`,
+};
+---
+
+<section
+  id="sobre-mi"
+  class="py-24 lg:py-32"
+  style="background:var(--color-crema2)"
+  aria-labelledby="sobre-mi-titulo"
+>
+  <div class="container mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Foto -->
+      <div class="reveal">
+        <div class="relative max-w-sm mx-auto lg:mx-0">
+          <div
+            class="absolute -top-3 -right-3 w-full h-full"
+            style="border:2px solid var(--color-rosa)"
+            aria-hidden="true"
+          ></div>
+          <!-- Flor decorativa -->
+          <div class="absolute -top-8 -left-4 opacity-30 w-16 h-16" aria-hidden="true">
+            <svg viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="6" fill="#7A8C6E"/>
+              <ellipse cx="40" cy="18" rx="9" ry="14" fill="#D4A843" opacity="0.7"/>
+              <ellipse cx="40" cy="62" rx="9" ry="14" fill="#D4A843" opacity="0.7"/>
+              <ellipse cx="18" cy="40" rx="14" ry="9" fill="#D4A843" opacity="0.7"/>
+              <ellipse cx="62" cy="40" rx="14" ry="9" fill="#D4A843" opacity="0.7"/>
+            </svg>
+          </div>
+          <img
+            src={sara.foto}
+            alt={sara.foto_alt}
+            width="400"
+            height="500"
+            class="relative z-10 w-full aspect-[4/5] object-cover object-top"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Texto -->
+      <div class="reveal" style="transition-delay:0.15s">
+        <span class="salvia-line" aria-hidden="true"></span>
+        <h2
+          id="sobre-mi-titulo"
+          class="font-display font-semibold mb-6"
+          style="font-size:var(--text-display-md);color:var(--color-tierra)"
+        >
+          Sobre mí
+        </h2>
+
+        <div class="prose-cottage mb-8">
+          {sara.bio_completa?.split('\n\n').map((p: string) => (
+            <p>{p.trim()}</p>
+          ))}
+        </div>
+
+        <!-- Residencia -->
+        {sara.residencia && (
+          <p class="font-body text-sm mb-6 flex items-center gap-2" style="color:var(--color-gris)">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--color-salvia)">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            {sara.residencia}
+          </p>
+        )}
+
+        <!-- Redes -->
+        {sara.redes.length > 0 && (
+          <div>
+            <p class="font-body text-xs font-medium tracking-widest uppercase mb-3" style="color:var(--color-gris)">
+              Encuéntrame en
+            </p>
+            <ul class="flex items-center gap-4" role="list">
+              {sara.redes.map((r: any) => (
+                <li>
+                  <a
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 font-body text-sm transition-colors duration-300"
+                    style="color:var(--color-gris)"
+                    aria-label={r.etiqueta}
+                  >
+                    <span set:html={iconos[r.red] ?? ''} />
+                    <span>{r.etiqueta}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

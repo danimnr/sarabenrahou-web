@@ -1,0 +1,57 @@
+﻿---
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
+const saraRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/sara.yaml'), 'utf8')) as any;
+const footer = cfgRaw?.footer ?? {};
+const redes = Array.isArray(saraRaw?.redes) ? saraRaw.redes : [];
+const year = new Date().getFullYear();
+const legal = (footer.texto_legal ?? '© {year} Sara Benrahou Clos.').replace('{year}', String(year));
+---
+
+<footer class="py-10" style="background:#6B4E6B;color:rgba(250,246,239,0.6)" role="contentinfo">
+  <div class="container mx-auto px-6 lg:px-10">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-6">
+      <a
+        href="/"
+        class="font-display font-semibold text-lg transition-colors"
+        style="color:var(--color-crema)"
+      >
+        <span style="color:var(--color-amarillo)">S</span>ara Benrahou
+      </a>
+      {redes.length > 0 && (
+        <ul class="flex items-center gap-5" role="list">
+          {redes.map((r: any) => (
+            <li>
+              <a
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-body text-xs tracking-wider transition-colors hover:text-crema"
+                style="color:rgba(250,246,239,0.4)"
+                aria-label={r.etiqueta}
+              >
+                {r.etiqueta}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <div class="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs" style="border-color:rgba(250,246,239,0.1)">
+      <p class="font-body">{legal}</p>
+      <nav aria-label="Páginas legales" class="flex items-center gap-5">
+        {footer.aviso_legal && (
+          <a href="/aviso-legal" class="font-body hover:text-crema transition-colors" style="color:rgba(250,246,239,0.4)">
+            Aviso legal
+          </a>
+        )}
+        <a href="/admin" class="font-body transition-colors" style="color:rgba(250,246,239,0.15)" aria-label="Panel de administración">⚙</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+

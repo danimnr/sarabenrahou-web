@@ -1,0 +1,102 @@
+﻿---
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
+const h = cfgRaw?.hero ?? {};
+---
+
+<section
+  id="inicio"
+  class="min-h-screen flex items-center overflow-hidden"
+  style="background:var(--color-crema)"
+  aria-labelledby="hero-titulo"
+>
+  <div class="container mx-auto px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+    <!-- Texto -->
+    <div class="order-2 lg:order-1">
+      <span class="salvia-line" aria-hidden="true"></span>
+      <p class="font-body text-xs font-medium tracking-widest uppercase mb-3" style="color:var(--color-salvia)">
+        Escritora · Bibliotecaria
+      </p>
+
+      <h1
+        id="hero-titulo"
+        class="font-display font-semibold leading-none mb-6"
+        style="font-size:var(--text-display-xl);color:var(--color-tierra);white-space:pre-line"
+      >
+        {h.titulo ?? 'Sara\nBenrahou'}
+      </h1>
+
+      <p class="font-display italic mb-5 leading-snug" style="font-size:1.4rem;color:var(--color-gris)">
+        "{h.lema ?? 'Entre páginas y personas'}"
+      </p>
+
+      <p class="font-body leading-relaxed max-w-md mb-10" style="color:var(--color-gris);font-size:1.05rem">
+        {h.presentacion ?? ''}
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="/#libro" class="btn-primary">
+          {h.boton_libro ?? 'Mi primer libro'}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a href="/#biblioteca" class="btn-secondary">
+          {h.boton_biblioteca ?? 'La biblioteca'}
+        </a>
+      </div>
+    </div>
+
+    <!-- Imagen -->
+    <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+      <div class="relative w-72 h-96 lg:w-[22rem] lg:h-[28rem]">
+        <!-- Decoraciones florales SVG -->
+        <div class="absolute -top-6 -right-6 w-24 h-24 opacity-20" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="8" fill="#7A8C6E"/>
+            <circle cx="50" cy="25" r="12" fill="#D4A843" opacity="0.6"/>
+            <circle cx="50" cy="75" r="12" fill="#D4A843" opacity="0.6"/>
+            <circle cx="25" cy="50" r="12" fill="#D4A843" opacity="0.6"/>
+            <circle cx="75" cy="50" r="12" fill="#D4A843" opacity="0.6"/>
+          </svg>
+        </div>
+        <!-- Marco decorativo -->
+        <div
+          class="absolute -bottom-3 -left-3 w-full h-full"
+          style="border:2px solid var(--color-rosa)"
+          aria-hidden="true"
+        ></div>
+        <img
+          src={h.imagen ?? '/images/hero-sara.jpg'}
+          alt={h.imagen_alt ?? 'Sara Benrahou'}
+          width="352"
+          height="448"
+          class="relative z-10 w-full h-full object-cover object-top"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <!-- Etiqueta cottage -->
+        <div
+          class="absolute -bottom-5 right-6 px-4 py-2 font-body text-xs font-medium tracking-wider uppercase z-20"
+          style="background:var(--color-salvia);color:var(--color-blanco)"
+          aria-hidden="true"
+        >
+          Muel, Zaragoza
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40" aria-hidden="true">
+    <span class="font-body text-xs tracking-widest uppercase" style="color:var(--color-gris)">Descubrir</span>
+    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--color-gris)">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>
+

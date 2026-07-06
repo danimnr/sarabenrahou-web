@@ -1,0 +1,152 @@
+﻿---
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
+const nav = cfgRaw?.nav ?? { inicio: 'Inicio', sobre_mi: 'Sobre mí', libro: 'Mi libro', biblioteca: 'Biblioteca', contacto: 'Contacto' };
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 left-0 right-0 z-50"
+  role="banner"
+>
+  <div
+    id="header-bg"
+    class="absolute inset-0 opacity-0 transition-opacity duration-500"
+    style="background:rgba(250,246,239,0.92);backdrop-filter:blur(8px);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative container mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
+
+    <a
+      href="/#inicio"
+      class="font-display font-semibold text-lg transition-colors duration-300"
+      style="color:var(--color-tierra)"
+      aria-label="Ir al inicio"
+    >
+      <span style="color:var(--color-salvia)">S</span>ara Benrahou
+    </a>
+
+    <!-- Navegación desktop -->
+    <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
+      {[
+        ['/#inicio',     nav.inicio],
+        ['/#sobre-mi',   nav.sobre_mi],
+        ['/#libro',      nav.libro],
+        ['/#biblioteca', nav.biblioteca],
+        ['/#contacto',   nav.contacto],
+      ].map(([href, label]) => (
+        <a href={href} class="nav-link">{label}</a>
+      ))}
+    </nav>
+
+    <!-- Botón menú móvil -->
+    <button
+      id="menu-toggle"
+      class="lg:hidden p-2 transition-colors"
+      style="color:var(--color-gris)"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      type="button"
+    >
+      <span id="icon-open" aria-hidden="true">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </span>
+      <span id="icon-close" class="hidden" aria-hidden="true">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  <nav
+    id="mobile-menu"
+    class="lg:hidden hidden"
+    style="background:var(--color-crema);border-top:1px solid var(--color-rosa);"
+    aria-label="Menú móvil"
+  >
+    <ul class="flex flex-col" role="list">
+      {[
+        ['/#inicio',     nav.inicio],
+        ['/#sobre-mi',   nav.sobre_mi],
+        ['/#libro',      nav.libro],
+        ['/#biblioteca', nav.biblioteca],
+        ['/#contacto',   nav.contacto],
+      ].map(([href, label]) => (
+        <li>
+          <a
+            href={href}
+            class="block px-6 py-4 font-body transition-colors"
+            style="color:var(--color-tierra);border-bottom:1px solid var(--color-rosa)"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gris);
+    transition: color 0.3s ease;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--color-salvia);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover {
+    color: var(--color-tierra);
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  const headerBg = document.getElementById('header-bg');
+  window.addEventListener('scroll', () => {
+    headerBg?.style.setProperty('opacity', window.scrollY > 60 ? '1' : '0');
+  }, { passive: true });
+
+  const btn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isHidden = menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', !isHidden);
+    btn.setAttribute('aria-expanded', String(isHidden));
+    iconOpen?.classList.toggle('hidden', isHidden ?? false);
+    iconClose?.classList.toggle('hidden', !isHidden);
+  });
+
+  menu?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>
+

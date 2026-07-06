@@ -1,0 +1,75 @@
+﻿---
+import '../styles/global.css';
+import AnuncioBanner from '../components/AnuncioBanner.astro';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  canonical?: string;
+}
+
+const { titulo, descripcion, imagen = '/images/hero-sara.jpg', canonical } = Astro.props;
+const SITE = 'https://sarabenrahou.com';
+const url = canonical ?? new URL(Astro.url.pathname, SITE).href;
+const imagenAbs = imagen.startsWith('http') ? imagen : `${SITE}${imagen}`;
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#FAF6EF" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>{titulo}</title>
+  <meta name="description" content={descripcion} />
+  <link rel="canonical" href={url} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={url} />
+  <meta property="og:title" content={titulo} />
+  <meta property="og:description" content={descripcion} />
+  <meta property="og:image" content={imagenAbs} />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={titulo} />
+  <meta name="twitter:description" content={descripcion} />
+  <meta name="twitter:image" content={imagenAbs} />
+</head>
+<body>
+
+  <a
+    href="#contenido-principal"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:text-sm"
+    style="background:var(--color-salvia);color:var(--color-blanco)"
+  >
+    Saltar al contenido
+  </a>
+
+  <AnuncioBanner /><slot name="header" />
+
+  <main id="contenido-principal" tabindex="-1">
+    <slot />
+  </main>
+
+  <slot name="footer" />
+
+</body>
+</html>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+

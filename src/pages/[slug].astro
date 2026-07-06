@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const paginas = await getCollection('paginas', ({ data }) => data.publicada !== false);
+  return paginas.map(p => ({ params: { slug: p.slug }, props: { pagina: p } }));
+}
+
+const { pagina } = Astro.props;
+const { Content } = await pagina.render();
+const d = pagina.data;
+---
+
+<BaseLayout titulo={`${d.titulo} — Sara Benrahou`} descripcion={d.descripcion ?? d.titulo}>
+  <Header slot="header" />
+  <div class="pt-28 pb-24">
+    <div class="container mx-auto px-6 lg:px-10 max-w-3xl">
+      <span class="salvia-line" aria-hidden="true"></span>
+      <h1 class="font-display font-semibold mb-8" style="font-size:var(--text-display-md);color:var(--color-tierra)">{d.titulo}</h1>
+      <div class="prose-cottage"><Content /></div>
+    </div>
+  </div>
+  <Footer slot="footer" />
+</BaseLayout>

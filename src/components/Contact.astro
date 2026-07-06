@@ -1,0 +1,85 @@
+﻿---
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
+const saraRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/sara.yaml'), 'utf8')) as any;
+const contacto = cfgRaw?.contacto ?? {};
+const redes = Array.isArray(saraRaw?.redes) ? saraRaw.redes : [];
+
+const iconos: Record<string, string> = {
+  instagram: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  tiktok: `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>`,
+};
+---
+
+<section
+  id="contacto"
+  class="py-24 lg:py-32 text-center"
+  style="background:#6B4E6B;background-image:url(/images/riomuel.jpg);background-size:cover;background-position:center;position:relative"
+  aria-labelledby="contacto-titulo"
+><div style="position:absolute;inset:0;background:rgba(107,78,107,0.75);z-index:0"></div>
+  <div class="container mx-auto px-6 lg:px-10 max-w-2xl" style="position:relative;z-index:1">
+
+    <div class="flex justify-center mb-0">
+      <span class="block w-12 h-px my-4" style="background:var(--color-amarillo)" aria-hidden="true"></span>
+    </div>
+
+    <h2
+      id="contacto-titulo"
+      class="font-display font-semibold mb-6 reveal"
+      style="font-size:var(--text-display-lg);color:var(--color-crema)"
+    >
+      Hablemos
+    </h2>
+
+    <p class="font-body leading-relaxed mb-10 reveal" style="color:rgba(250,246,239,0.7);transition-delay:0.1s;font-size:1.05rem">
+      {contacto.texto_intro ?? ''}
+    </p>
+
+    <div class="reveal" style="transition-delay:0.2s">
+      <a
+        href="https://mail.google.com/mail/?view=cm&to=sarabclm13unizar@gmail.com" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 px-8 py-4 font-body font-medium text-sm tracking-wide transition-colors duration-300"
+        style="background:var(--color-amarillo);color:var(--color-tierra)"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+        {contacto.boton_email ?? 'Escribir a Sara'}
+      </a>
+    </div>
+
+    {redes.length > 0 && (
+      <div class="mt-12 reveal" style="transition-delay:0.3s">
+        <p class="font-body text-xs font-medium tracking-widest uppercase mb-4" style="color:rgba(250,246,239,0.4)">
+          O sígueme en
+        </p>
+        <ul class="flex justify-center items-center gap-6" role="list">
+          {redes.map((r: any) => (
+            <li>
+              <a
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 font-body text-sm transition-colors duration-300"
+                style="color:rgba(250,246,239,0.5)"
+                aria-label={r.etiqueta}
+              >
+                <span set:html={iconos[r.red] ?? ''} />
+                <span>{r.etiqueta}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>
+
+
+
+
+
+

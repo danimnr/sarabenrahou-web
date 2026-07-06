@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<BaseLayout titulo="Página no encontrada — Sara Benrahou" descripcion="Esta página no existe">
+  <Header slot="header" />
+  <div class="min-h-screen flex items-center justify-center pt-16">
+    <div class="text-center px-6">
+      <p class="font-display font-bold mb-4" style="font-size:8rem;line-height:1;color:var(--color-amarillo)">404</p>
+      <h1 class="font-display font-semibold mb-4" style="font-size:var(--text-display-md);color:var(--color-tierra)">Página no encontrada</h1>
+      <p class="font-body mb-8 max-w-sm mx-auto" style="color:var(--color-gris)">
+        Esta página no existe. Como los libros que se pierden entre estanterías, a veces hay que volver al principio.
+      </p>
+      <a href="/" class="btn-primary">Volver al inicio</a>
+    </div>
+  </div>
+  <Footer slot="footer" />
+</BaseLayout>

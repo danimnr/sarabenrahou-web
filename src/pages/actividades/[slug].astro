@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const actividades = await getCollection('actividades', ({ data }) => data.activo !== false);
+  return actividades.map(a => ({ params: { slug: a.slug }, props: { actividad: a } }));
+}
+
+const { actividad } = Astro.props;
+const { Content } = await actividad.render();
+const d = actividad.data;
+const fechaFmt = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(d.fecha));
+---
+
+<BaseLayout
+  titulo={`${d.titulo} — Sara Benrahou`}
+  descripcion={d.extracto}
+  imagen={d.imagen}
+>
+  <Header slot="header" />
+
+  <article class="pt-28 pb-24">
+    <div class="container mx-auto px-6 lg:px-10 max-w-3xl">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Ruta" class="mb-8">
+        <ol class="flex items-center gap-2 font-body text-xs" style="color:var(--color-gris)" role="list">
+          <li><a href="/" style="color:var(--color-gris)" class="hover:text-salvia transition-colors">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/#biblioteca" style="color:var(--color-gris)" class="hover:text-salvia transition-colors">Biblioteca</a></li>
+          <li aria-hidden="true">›</li>
+          <li style="color:var(--color-tierra)" aria-current="page">{d.titulo}</li>
+        </ol>
+      </nav>
+
+      <span class="salvia-line" aria-hidden="true"></span>
+
+      {d.categoria && (
+        <span
+          class="inline-block font-body text-xs font-medium tracking-widest uppercase px-2 py-0.5 mb-4"
+          style="background:var(--color-salvia);color:var(--color-blanco)"
+        >
+          {d.categoria}
+        </span>
+      )}
+
+      <h1
+        class="font-display font-semibold mb-4 leading-tight"
+        style="font-size:var(--text-display-md);color:var(--color-tierra)"
+      >
+        {d.titulo}
+      </h1>
+
+      <time datetime={new Date(d.fecha).toISOString()} class="font-body text-sm mb-8 block" style="color:var(--color-gris)">
+        {fechaFmt}
+      </time>
+
+      {d.imagen && (
+        <img
+          src={d.imagen}
+          alt={d.imagen_alt ?? d.titulo}
+          width="800"
+          height="450"
+          class="w-full aspect-video object-cover mb-10"
+          loading="lazy"
+        />
+      )}
+
+      <div class="prose-cottage">
+        <Content />
+      </div>
+
+      <div class="mt-12 pt-6" style="border-top:1px solid var(--color-rosa)">
+        <a
+          href="/#biblioteca"
+          class="font-body text-sm flex items-center gap-2 transition-colors"
+          style="color:var(--color-gris)"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Volver a la biblioteca
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</BaseLayout>

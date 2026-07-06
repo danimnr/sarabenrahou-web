@@ -1,0 +1,40 @@
+﻿seo:
+  titulo_sitio: "Sara Benrahou — Escritora y bibliotecaria"
+  descripcion: "Web de Sara Benrahou Clos, escritora y encargada de la Biblioteca-Ludoteca de Muel. Actividades, lecturas y su primera novela."
+  imagen_og: "/images/hero-sara.jpg"
+  idioma: "es"
+
+nav:
+  inicio: "Inicio"
+  sobre_mi: "Sobre mí"
+  libro: "Mi libro"
+  biblioteca: "Biblioteca"
+  contacto: "Contacto"
+
+hero:
+  titulo: "Sara\nBenrahou"
+  lema: "Entre páginas y personas"
+  presentacion: "Escritora y encargada de la Biblioteca-Ludoteca de Muel. Creo espacios donde los libros y las personas se encuentran."
+  imagen: "/images/hero-sara.jpg"
+  imagen_alt: "Sara Benrahou Clos"
+  boton_libro: "Mi primer libro"
+  boton_biblioteca: "La biblioteca"
+
+contacto:
+  texto_intro: "¿Quieres organizar una actividad, hablar de libros o simplemente saludar? Escríbeme."
+  email: "sarabclm13unizar@gmail.com"
+  boton_email: "Escribir a Sara"
+
+footer:
+  texto_legal: "© {year} Sara Benrahou Clos. Todos los derechos reservados."
+  aviso_legal: true
+  politica_privacidad: true
+
+
+
+anuncio:
+  activo: true
+  texto: "🌻 La biblioteca estará cerrada del 13 de julio al 10 de agosto. ¡Feliz verano!"
+  enlace: ""
+  enlace_texto: ""
+
