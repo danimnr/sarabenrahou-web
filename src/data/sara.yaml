@@ -1,13 +1,11 @@
-﻿nombre: "Sara Benrahou Clos"
-nombre_corto: "Sara"
-subtitulo: "Escritora y bibliotecaria"
-residencia: "Muel, Zaragoza"
-
+nombre: Sara Benrahou Clos
+nombre_corto: Sara
+subtitulo: Escritora y bibliotecaria
+residencia: Muel, Zaragoza
 bio_corta: >
   Escritora y encargada de la Biblioteca-Ludoteca de Muel. Creo espacios donde
   los libros y las personas se encuentran, dentro y fuera de las páginas.
-
-bio_completa: >
+bio_completa: >-
   Soy Sara, y los libros han sido siempre mi forma de entender el mundo.
 
   Como encargada de la Biblioteca-Ludoteca de Muel llevo años trabajando para
@@ -16,46 +14,14 @@ bio_completa: >
   aventura posible.
 
   Paralelamente, escribo. Formo parte de La geografía de la memoria, una obra
-  colaborativa de ocho escritoras publicada con Diversidad Literaria a través
-  de crowdfunding. Un proyecto colectivo sobre la memoria, los lugares y las
+  colaborativa de ocho escritoras publicada con Diversidad Literaria a través de
+  crowdfunding. Un proyecto colectivo sobre la memoria, los lugares y las
   mujeres que los habitan.
 
   Me encontrarás en Instagram y TikTok como @cucutecariadelujo, donde comparto
   lecturas, recomendaciones y un poco del día a día entre estantes.
-
-foto: "/images/hero-sara.jpg"
-foto_alt: "Sara Benrahou Clos en el bosque"
-foto_biblioteca: "/images/sara-exponiendo.jpg"
-foto_biblioteca_alt: "Sara presentando un evento en la biblioteca de Muel"
-
-email: "sarabclm13unizar@gmail.com"
-
-redes:
-  - red: "instagram"
-    url: "https://instagram.com/cucutecariadelujo"
-    etiqueta: "@cucutecariadelujo"
-  - red: "tiktok"
-    url: "https://tiktok.com/@cucutecariadelujo"
-    etiqueta: "@cucutecariadelujo"
-
-libro:
-  titulo: "La geografía de la memoria"
-  descripcion: >
-    Una obra colaborativa de ocho escritoras nacida de un proyecto de crowdfunding.
-    Ocho voces femeninas que exploran la memoria, los lugares que nos forman y las
-    historias que guardamos en ellos. Sara participa como una de las autoras de
-    esta antología publicada con Diversidad Literaria.
-  enlace: "https://www.diversidadliteraria.com/la-geografia-de-la-memoria"
-  boton: "Ver en Diversidad Literaria"
-  imagen: "/images/sara-con-escritora.jpg"
-  imagen_alt: "Sara en la presentación del libro en la biblioteca"
-
-biblioteca:
-  nombre: "Biblioteca-Ludoteca de Muel"
-  descripcion: >
-    Un espacio para leer, jugar y descubrir. La Biblioteca-Ludoteca de Muel
-    es un lugar vivo donde organizamos actividades para todos los públicos,
-    especialmente para los más pequeños.
-  imagen: "/images/sara-exponiendo.jpg"
-  imagen_alt: "Sara presentando un evento en la biblioteca de Muel"
-
+foto: /uploads/fotocampo.jpg
+foto_alt: Sara Benrahou Clos en el bosque
+email: sarabclm13unizar@gmail.com
+red_instagram: https://www.instagram.com/cucutecariadelujo/
+red_tiktok: https://www.tiktok.com/@cucutecariadelujo
