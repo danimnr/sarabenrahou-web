@@ -5,7 +5,7 @@ import path from 'path';
 
 const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
 const saraRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/sara.yaml'), 'utf8')) as any;
-const contacto = cfgRaw?.contacto ?? {};
+const contacto = { texto_intro: cfgRaw?.texto_intro ?? '', email: cfgRaw?.email ?? 'sarabclm13unizar@gmail.com', boton_email: cfgRaw?.boton_email ?? 'Escribir a Sara' };
 const redes = Array.isArray(saraRaw?.redes) ? saraRaw.redes : [];
 
 const iconos: Record<string, string> = {
@@ -77,6 +77,7 @@ const iconos: Record<string, string> = {
     )}
   </div>
 </section>
+
 
 
 

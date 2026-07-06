@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
-const nav = cfgRaw?.nav ?? { inicio: 'Inicio', sobre_mi: 'Sobre mí', libro: 'Mi libro', biblioteca: 'Biblioteca', contacto: 'Contacto' };
+const nav = { inicio: 'Inicio', sobre_mi: 'Sobre mí', libro: 'Mi libro', biblioteca: 'Biblioteca', contacto: 'Contacto' };
 ---
 
 <header
@@ -149,4 +149,5 @@ const nav = cfgRaw?.nav ?? { inicio: 'Inicio', sobre_mi: 'Sobre mí', libro: 'Mi
     });
   });
 </script>
+
 

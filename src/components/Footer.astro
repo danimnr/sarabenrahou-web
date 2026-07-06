@@ -5,7 +5,7 @@ import path from 'path';
 
 const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
 const saraRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/sara.yaml'), 'utf8')) as any;
-const footer = cfgRaw?.footer ?? {};
+const footer = { texto_legal: cfgRaw?.texto_legal ?? '© {year} Sara Benrahou Clos.', aviso_legal: true };
 const redes = Array.isArray(saraRaw?.redes) ? saraRaw.redes : [];
 const year = new Date().getFullYear();
 const legal = (footer.texto_legal ?? '© {year} Sara Benrahou Clos.').replace('{year}', String(year));
@@ -54,4 +54,5 @@ const legal = (footer.texto_legal ?? '© {year} Sara Benrahou Clos.').replace('{
     </div>
   </div>
 </footer>
+
 

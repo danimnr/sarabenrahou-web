@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
-const h = cfgRaw?.hero ?? {};
+const h = { titulo: cfgRaw?.titulo ?? 'Sara\nBenrahou', lema: cfgRaw?.lema ?? '', presentacion: cfgRaw?.presentacion ?? '', imagen: cfgRaw?.imagen_hero ?? '/images/hero-sara.jpg', imagen_alt: 'Sara Benrahou', boton_libro: cfgRaw?.boton_libro ?? 'Mi primer libro', boton_biblioteca: cfgRaw?.boton_biblioteca ?? 'La biblioteca' };
 ---
 
 <section
@@ -99,4 +99,5 @@ const h = cfgRaw?.hero ?? {};
     </svg>
   </div>
 </section>
+
 

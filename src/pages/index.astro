@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
@@ -12,7 +12,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 const cfgRaw = yaml.load(readFileSync(path.join(process.cwd(), 'src/data/config.yaml'), 'utf8')) as any;
-const seo = cfgRaw?.seo ?? {};
+const seo = { titulo_sitio: cfgRaw?.titulo_sitio ?? 'Sara Benrahou', descripcion: cfgRaw?.descripcion ?? '', imagen_og: cfgRaw?.imagen_og ?? '/images/hero-sara.jpg' };
 ---
 
 <BaseLayout
@@ -28,3 +28,4 @@ const seo = cfgRaw?.seo ?? {};
   <Contact />
   <Footer slot="footer" />
 </BaseLayout>
+
